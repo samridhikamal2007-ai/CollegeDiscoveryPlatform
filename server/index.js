@@ -5,6 +5,8 @@ const importData = require('./seeder');
 const jobRoutes = require('./routes/jobs');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
+const collegeRoutes = require('./routes/colleges');
+const examRoutes = require('./routes/exams');
 const cors = require('cors');
 
 dotenv.config();
@@ -32,6 +34,8 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use('/api/auth', authRoutes);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/colleges', collegeRoutes);
+app.use('/api/exams', examRoutes);
 
 // Test route
 app.get('/api/health', (req, res) => {

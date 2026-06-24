@@ -442,6 +442,13 @@ router.put('/:id/applicants/:applicantId', protect, authorize('employer'), async
         applicant.status = req.body.status;
         await job.save();
 
+        // Sync with Application collection
+        await Application.findOneAndUpdate(
+            { job: job._id, applicant: req.params.applicantId },
+            { status: req.body.status },
+            { new: true }
+        );
+
         res.status(200).json({
             success: true,
             data: applicant

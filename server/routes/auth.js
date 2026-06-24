@@ -122,6 +122,7 @@ router.put('/profile', protect, async (req, res) => {
         const fieldsToUpdate = {
             name: req.body.name,
             phone: req.body.phone,
+            resume: req.body.resume,
             skills: req.body.skills,
             experience: req.body.experience,
             education: req.body.education,

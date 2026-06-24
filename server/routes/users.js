@@ -295,4 +295,32 @@ router.get('/dashboard/stats', protect, async (req, res) => {
     }
 });
 
+// @route   GET /api/users/dashboard/applications
+// @desc    Get candidate's job applications
+// @access  Private (Candidate only)
+router.get('/dashboard/applications', protect, authorize('candidate'), async (req, res) => {
+    try {
+        const applications = await Application.find({ applicant: req.user._id })
+            .populate({
+                path: 'job',
+                populate: {
+                    path: 'employer',
+                    select: 'name company companyWebsite'
+                }
+            })
+            .sort({ appliedAt: -1 });
+
+        res.status(200).json({
+            success: true,
+            count: applications.length,
+            data: applications
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+});
+
 module.exports = router;
